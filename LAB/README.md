@@ -48,12 +48,90 @@
 
 Применение:
 
-Singleton связан с AbstractFactory через класс [Option](https://github.com/Dagonail/Lab1_Tmps/blob/master/LAB/LAB1/Option.cs), который дает одну опцию за раз. Согласно теории: ровно один экземпляр класса и доступен для клиентов из хорошо известной точки доступа. Таким образом, он создает свой собственный уникальный экземпляр, который представляет выбор клиента для еды и меню.
+**Singleton** связан с **AbstractFactory** через класс [Option](https://github.com/Dagonail/Lab1_Tmps/blob/master/LAB/LAB1/Option.cs), который дает одну опцию за раз.
+```
+namespace LAB1
+{
+    class Option
+    {
+        private Option() { }
 
-Этот выбор - класс [ChosenOption](https://github.com/Dagonail/Lab1_Tmps/blob/master/LAB/LAB1/ChosenOption.cs), который представляет Абстрактную Фабрику. Создает ссылку на MealFactory и MenuFactory через интерфейсы. , Теоретически: обеспечивает интерфейс для создания семейств или связанных или зависимых объектов без указания их конкретных классов.
+        public static Option Instance { get; } = new Option();
+        public IChosen ChosenOption { get; } = new ChosenOption();
+    }
+}
+```
+Согласно теории: ровно один экземпляр класса и доступен для клиентов из хорошо известной точки доступа. Таким образом, он создает свой собственный уникальный экземпляр, который представляет выбор клиента для еды и меню.
+
+Этот выбор - класс [ChosenOption](https://github.com/Dagonail/Lab1_Tmps/blob/master/LAB/LAB1/ChosenOption.cs), который представляет **Abstract Factory**.
+```
+
+namespace LAB1
+{
+  
+        public interface IChosen
+        {
+            IMealFactory GetMealFactory();
+            IMenuFactory GetMenuFactory();
+        }
+
+        public class ChosenOption : IChosen
+        {
+            public IMealFactory GetMealFactory() => new MealFactory();
+
+            public IMenuFactory GetMenuFactory() => new MenuFactory();
+
+            
+         }   
+}
+```
+Создает ссылку на **MealFactory** и **MenuFactory** через интерфейсы. , Теоретически: обеспечивает интерфейс для создания семейств или связанных или зависимых объектов без указания их конкретных классов.
+
+Далее у нас есть **Factory** паттерн с 3 фабриками.
+ 1. Класс **[MealFactory](https://github.com/Secoranda/TMPS/blob/master/LAB1/LAB1/LAB1/MealFactory.cs)**
+  использует интерфейс и инструкцию switch с параметром из **Builder classes**.
+ Таким образом, связаны **Factory** и **Builder** паттерны.
+ 
+       1.1. Шаблон **Builder** использовался для создания классов **[Meal](https://github.com/Dagonail/Lab1_Tmps/blob/master/LAB/LAB1/Meal.cs)**. 
+       **Builder** больше похож на интерфейс, сам продукт создан **ConcreteBuilder**.
+       
+ 2.  **[MenuFactory](https://github.com/Dagonail/Lab1_Tmps/blob/master/LAB/LAB1/MealFactory.cs)** связана с классом **Prototype**.
+ ```
+ public interface IMealFactory
+        {
+            Meal CreateMeal(string name, Combination combination);
+        }
+
+        public class MealFactory : IMealFactory
+        {
+            public Meal CreateMeal(string name, Combination combination)
+            {
+            IMealBuilder builder = new MealBuilder(name);
+            switch (combination)
+            {
+                    case Combination.Pie:
+                        ConcreteMealBuilder pie = new ConcreteMealBuilder();
+                        pie.Pie(builder);
+                        return builder.BuildMeal();
+                    case Combination.Kebab:
+                        ConcreteMealBuilder kebab = new ConcreteMealBuilder();
+                        kebab.Kebab(builder);
+                        return builder.BuildMeal();
+                    case Combination.Barbeque:
+                        ConcreteMealBuilder barbeque = new ConcreteMealBuilder();
+                        barbeque.Barbeque(builder);
+                        return builder.BuildMeal();
+
+            }
+            return null;
+            }
+}
+ ```
+ Меню представляет собой комбинацию между едой. Поэтому, чтобы избежать создания одинаковых объектов, используется метод clone () через шаблон **Prototype**.
 
 Результат работы программы:
-![Image of program](https://github.com/cerneiirina/TMPS/blob/master/%D0%91%D0%B5%D0%B7%D1%8B%D0%BC%D1%8F%D0%BD%D0%BD%D1%8B%D0%B9.jpg)
+![Image of program](https://github.com/Dagonail/Lab1_Tmps/blob/master/LAB/Screens/%D0%91%D0%B5%D0%B7%D1%8B%D0%BC%D1%8F%D0%BD%D0%BD%D1%8B%D0%B9.png)
+![Image of program](https://github.com/Dagonail/Lab1_Tmps/blob/master/LAB/Screens/%D0%91%D0%B5%D0%B7%D1%8B%D0%BC%D1%8F%D0%BD%D0%BD%D1%8B%D0%B92.png)
 
 Вывод :
  В ходе данной лабораторной работы мы изучили и реализовали порождающие паттерны, они нам упрощают и структурируют код.
