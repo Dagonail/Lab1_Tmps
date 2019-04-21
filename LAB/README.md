@@ -47,6 +47,7 @@
 ![Image of Prototype](https://refactoring.guru/images/patterns/diagrams/prototype/structure-2x.png)
 
 Применение:
+
 Singleton связан с AbstractFactory через класс [Option](https://github.com/Dagonail/Lab1_Tmps/blob/master/LAB/LAB1/Option.cs), который дает одну опцию за раз. Согласно теории: ровно один экземпляр класса и доступен для клиентов из хорошо известной точки доступа. Таким образом, он создает свой собственный уникальный экземпляр, который представляет выбор клиента для еды и меню.
 
 Результат работы программы:
