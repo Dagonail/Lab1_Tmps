@@ -2,7 +2,7 @@
 
 Лабораторная №1
 
-*Подготовила - Черней Ирина, группа TI-164*
+*Подготовил - Кушнир Влад, группа TI-164*
 
 *Целью данной лабораторной работы было имплементировать 5 порождающих шабловнов*
 
@@ -13,7 +13,7 @@
 Структура шаблона одиночка
 ![Структура шаблона одиночка](https://refactoring.guru/images/patterns/diagrams/singleton/structure-ru-2x.png )
 
-Чтоб реализовать этот шаблон был создан класс [Map](https://github.com/cerneiirina/TMPS/blob/master/patternLab/Map/Map.cs)
+Чтоб реализовать этот шаблон был создан класс [Option](https://github.com/Dagonail/Lab1_Tmps/blob/master/LAB/LAB1/Option.cs)
 ```
 public class Map
 {
